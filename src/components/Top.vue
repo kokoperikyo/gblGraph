@@ -111,7 +111,7 @@
           <v-sparkline
             :value="value"
             color="#f1521a"
-            height="200px"
+            height="200"
             padding="24"
             stroke-linecap="round"
             smooth

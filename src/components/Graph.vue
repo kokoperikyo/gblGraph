@@ -1,13 +1,13 @@
 <template>
   <div>
     <div class="mt-2">{{graphInfo.name}}さんのレート推移</div>
-    <v-card class="mx-auto text-center mt-1" color="#f1521a" dark width="400px" height="370px">
+    <v-card class="mx-auto text-center mt-1" color="#f1521a" dark width="400px" height="350px">
       <v-card-text>
         <v-sheet color="#B4E1FF" flat>
           <v-sparkline
             :value="graphInfo.rateList"
             color="#f1521a"
-            height="200px"
+            height="180px"
             padding="24"
             stroke-linecap="round"
             smooth
@@ -219,7 +219,7 @@ export default {
 <style>
 .rankIcon {
   position: absolute;
-  bottom: 340px;
+  bottom: 260px;
   left: 20px;
 }
 .title {
