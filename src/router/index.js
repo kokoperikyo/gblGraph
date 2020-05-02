@@ -1,23 +1,48 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import Top from "../components/Top.vue";
+import TopForGuest from "../components/TopForGuest.vue";
+import First from "../components/First.vue";
+import Test from "../components/Test.vue";
+import Graph from "../components/Graph.vue";
+
 
 Vue.use(VueRouter);
 
-const routes = [
-  {
-    path: "/",
-    name: "Home",
-    component: Home
+const routes = [{
+    path: "*",
+    redirect: "top"
   },
   {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
+    path: "/",
+    name: "first",
+    component: First
+  },
+  {
+    path: "/top",
+    name: "top",
+    component: Top
+  },
+  {
+    path: "/guestTop",
+    name: "guestTop",
+    component: TopForGuest
+  },
+
+  {
+    path: "/graph",
+    name: "graph",
+    component: Graph
+  },
+  {
+    path: "/graph/:uid",
+    name: "graphWithPa",
+    component: Graph
+  },
+  {
+    path: "/test",
+    name: "test",
+    component: Test
   }
 ];
 
