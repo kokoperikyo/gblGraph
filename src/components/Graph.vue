@@ -84,8 +84,8 @@ export default {
         "%20%23GOバトルリーグ" +
         "%20%23GBLグラフ" +
         "&url=" +
-        `http://192.168.3.68:8081/graph/${this.$route.params["uid"]}`;
-      // `https://pgochat-91c46.firebaseapp.com/graph/${this.$route.params["uid"]}`;
+        // `http://192.168.3.68:8081/graph/${this.$route.params["uid"]}`;
+        `https://gblgraph.firebaseapp.com/graph/${this.$route.params["uid"]}`;
       location.href = shareURL;
     }
   },
