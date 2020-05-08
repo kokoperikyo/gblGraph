@@ -73,7 +73,7 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col style="font-size:12px;" class="mt-3" cols="3">フリー最高</v-col>
+          <v-col style="font-size:10px;" class="mt-3" cols="3">フリー最高</v-col>
           <v-col color="#f1521a" cols="8">
             <v-text-field
               background-color="#B4E1FF"

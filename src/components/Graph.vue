@@ -129,6 +129,9 @@ export default {
       const favorite = copyRateListArrayForThree.indexOf(
         Math.max(...copyRateListArrayForThree)
       );
+      const favoriteAll = rateListArray.indexOf(Math.max(...rateListArray));
+      console.log(favoriteAll);
+
       const maxRate = Math.max.apply(null, copyRateListArrayForThree);
       //リーグ適正
       if (favorite == 0) {
@@ -168,7 +171,7 @@ export default {
       if (rateListArray[0] <= 2000 && rateListArray[5] >= 3000) {
         titleList.push("マジもんのヤベーやつ");
       } else if (rateListArray[0] <= 2200 && rateListArray[5] >= 3000) {
-        titleList.push("努力家");
+        titleList.push("塵も積もれば");
       }
       //最強決定
       const fil = copyRateListArrayForFour.filter(num => num >= 3000);
@@ -207,6 +210,33 @@ export default {
         300
       ) {
         titleList.push("悔しさこそが成長のバネ");
+      }
+      //大器晩成
+      if (maxRate < 3000 && rateListArray[4] >= 3000) {
+        titleList.push("大器晩成");
+      }
+      //右肩上がり
+      if (
+        rateListArray[0] <= rateListArray[1] &&
+        rateListArray[1] <= rateListArray[2] &&
+        rateListArray[2] <= rateListArray[3] &&
+        rateListArray[3] <= rateListArray[4] &&
+        rateListArray[4] <= rateListArray[5]
+      ) {
+        titleList.push("努力の賜物");
+      } else if (
+        rateListArray[0] <= rateListArray[1] &&
+        rateListArray[1] <= rateListArray[2] &&
+        rateListArray[2] <= rateListArray[3] &&
+        rateListArray[3] <= rateListArray[4]
+      ) {
+        titleList.push("順調な人生");
+      }
+      //転落人生
+      if (favoriteAll == 1) {
+        titleList.push("転落人生");
+      } else if (favoriteAll == 0) {
+        titleList.push("上を向いて歩こう");
       }
       this.titleListDis = titleList;
     }, 3000);
