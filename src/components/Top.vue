@@ -73,6 +73,20 @@
           </v-col>
         </v-row>
         <v-row>
+          <v-col style="font-size:12px;" class="mt-3" cols="3">フリー最高</v-col>
+          <v-col color="#f1521a" cols="8">
+            <v-text-field
+              background-color="#B4E1FF"
+              :error-messages="inputFinalMaxError"
+              v-model="inputFinalMax"
+              rounded
+              placeholder="全リーグ解放時最高レート"
+              solo
+              dense
+            ></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row>
           <v-col style="font-size:12px;" class="mt-3" cols="3">最終</v-col>
           <v-col color="#f1521a" cols="8">
             <v-text-field
@@ -120,12 +134,12 @@
       </v-card-text>
       <v-row class="mx-3">
         <v-col v-for="item in value" :key="item.index">
-          <div style="font-size:12px;">{{item}}</div>
+          <div style="font-size:10px;">{{item}}</div>
         </v-col>
       </v-row>
       <v-row class="mx-3">
         <v-col v-for="item in labels" :key="item.index">
-          <div style="font-size:12px;">{{item}}</div>
+          <div style="font-size:10px;">{{item}}</div>
         </v-col>
       </v-row>
     </v-card>
@@ -180,6 +194,13 @@ export default {
       maxValue: maxValue(3299),
       int: integer
     },
+    inputFinalMax: {
+      required,
+      minLength: minLength(4),
+      maxLength: maxLength(4),
+      maxValue: maxValue(3299),
+      int: integer
+    },
     inputLast: {
       required,
       minLength: minLength(4),
@@ -190,13 +211,14 @@ export default {
   },
   data: () => ({
     makeGraphDialog: false,
-    labels: ["初期", "スーパー", "ハイパー", "マスター", "最終"],
-    value: [2234, 2850, 2550, 2566, 2924],
+    labels: ["初期", "SL", "HL", "ML", "フリー最高", "最終"],
+    value: [2234, 2850, 2550, 2566, 3063, 2924],
     inputNickname: "",
     inputFirst: "",
     inputSuper: "",
     inputHyper: "",
     inputMaster: "",
+    inputFinalMax: "",
     inputLast: ""
   }),
   mounted() {
@@ -218,6 +240,7 @@ export default {
         parseInt(this.inputSuper),
         parseInt(this.inputHyper),
         parseInt(this.inputMaster),
+        parseInt(this.inputFinalMax),
         parseInt(this.inputLast)
       ];
 
@@ -290,6 +313,19 @@ export default {
       !this.$v.inputMaster.maxValue &&
         errors.push("さすがにそれはないっしょwww");
       !this.$v.inputMaster.required && errors.push("必須項目です");
+      return errors;
+    },
+    inputFinalMaxError() {
+      const errors = [];
+      if (this.$v.inputFinalMax.$dirty) return errors;
+      !this.$v.inputFinalMax.int && errors.push("数字を入力してください");
+      !this.$v.inputFinalMax.minLength &&
+        errors.push("4桁の数字を入力してください");
+      !this.$v.inputFinalMax.maxLength &&
+        errors.push("4桁の数字を入力してください");
+      !this.$v.inputFinalMax.maxValue &&
+        errors.push("さすがにそれはないっしょwww");
+      !this.$v.inputFinalMax.required && errors.push("必須項目です");
       return errors;
     },
     inputLastError() {

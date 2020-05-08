@@ -16,12 +16,12 @@
       </v-card-text>
       <v-row class="mx-3">
         <v-col v-for="item in graphInfo.rateList" :key="item.index">
-          <div class="font-weight-black" style="font-size:12px;">{{item}}</div>
+          <div class="font-weight-black" style="font-size:10px;">{{item}}</div>
         </v-col>
       </v-row>
       <v-row class="mx-3">
         <v-col v-for="item in labels" :key="item.index">
-          <div class="font-weight-black" style="font-size:12px;">{{item}}</div>
+          <div class="font-weight-black" style="font-size:10px;">{{item}}</div>
         </v-col>
       </v-row>
       <v-img class="rankIcon" :src="whichRank" width="80px"></v-img>
@@ -64,8 +64,7 @@ import { db } from "@/plugins/firebase";
 
 export default {
   data: () => ({
-    labels: ["初期", "スーパー", "ハイパー", "マスター", "最終"],
-    value: [2234, 2850, 2550, 2566, 2924],
+    labels: ["初期", "SL", "HL", "ML", "フリー最高", "最終"],
     graphInfo: null,
     titleListDis: []
   }),
@@ -120,9 +119,13 @@ export default {
       const rateListArray = this.graphInfo.rateList;
       const copyRateListArrayForThree = [].concat(this.graphInfo.rateList); //配列コピー
       const copyRateListArrayForFour = [].concat(this.graphInfo.rateList); //配列コピー
+      const copyRateListArrayForFive = [].concat(this.graphInfo.rateList); //配列コピー
       copyRateListArrayForThree.shift();
       copyRateListArrayForFour.shift();
+      copyRateListArrayForFive.shift();
       copyRateListArrayForThree.pop();
+      copyRateListArrayForThree.pop();
+      copyRateListArrayForFour.pop();
       const favorite = copyRateListArrayForThree.indexOf(
         Math.max(...copyRateListArrayForThree)
       );
@@ -162,16 +165,16 @@ export default {
         titleList.push("ランク8");
       }
       //初期レートが低くて3000越えの人
-      if (rateListArray[0] <= 2000 && rateListArray[4] >= 3000) {
+      if (rateListArray[0] <= 2000 && rateListArray[5] >= 3000) {
         titleList.push("マジもんのヤベーやつ");
-      } else if (rateListArray[0] <= 2200 && rateListArray[4] >= 3000) {
+      } else if (rateListArray[0] <= 2200 && rateListArray[5] >= 3000) {
         titleList.push("努力家");
       }
       //最強決定
-      const fil = copyRateListArrayForThree.filter(num => num >= 3000);
-      if (rateListArray[4] >= 3000 && fil.length >= 3) {
+      const fil = copyRateListArrayForFour.filter(num => num >= 3000);
+      if (rateListArray[5] >= 3000 && fil.length >= 3) {
         titleList.push("††最強††");
-      } else if (rateListArray[4] >= 3000 && fil.length >= 2) {
+      } else if (rateListArray[5] >= 3000 && fil.length >= 2) {
         titleList.push("強者");
       }
       //3000以上世界ランカー
@@ -194,18 +197,17 @@ export default {
       // 山あり谷あり
       if (
         Math.max.apply(null, rateListArray) -
-          Math.min.apply(null, copyRateListArrayForFour) >=
+          Math.min.apply(null, copyRateListArrayForFive) >=
         500
       ) {
         titleList.push("山あり谷あり");
       } else if (
         Math.max.apply(null, rateListArray) -
-          Math.min.apply(null, copyRateListArrayForFour) >=
+          Math.min.apply(null, copyRateListArrayForFive) >=
         300
       ) {
         titleList.push("悔しさこそが成長のバネ");
       }
-      console.log(titleList);
       this.titleListDis = titleList;
     }, 3000);
   },

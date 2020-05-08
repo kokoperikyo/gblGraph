@@ -74,6 +74,20 @@
         </v-col>
       </v-row>
       <v-row>
+        <v-col style="font-size:12px;" class="mt-3" cols="3">フリー最高</v-col>
+        <v-col color="#f1521a" cols="8">
+          <v-text-field
+            background-color="white"
+            :error-messages="inputFinalMaxError"
+            v-model="inputFinalMax"
+            rounded
+            placeholder="全リーグ解放時最高レート"
+            solo
+            dense
+          ></v-text-field>
+        </v-col>
+      </v-row>
+      <v-row>
         <v-col style="font-size:12px;" class="mt-3" cols="3">最終</v-col>
         <v-col color="#f1521a" cols="8">
           <v-text-field
@@ -142,6 +156,13 @@ export default {
       maxValue: maxValue(3299),
       int: integer
     },
+    inputFinalMax: {
+      required,
+      minLength: minLength(4),
+      maxLength: maxLength(4),
+      maxValue: maxValue(3299),
+      int: integer
+    },
     inputLast: {
       required,
       minLength: minLength(4),
@@ -156,6 +177,7 @@ export default {
     inputSuper: "",
     inputHyper: "",
     inputMaster: "",
+    inputFinalMax: "",
     inputLast: ""
   }),
   mounted() {
@@ -177,6 +199,7 @@ export default {
         parseInt(this.inputSuper),
         parseInt(this.inputHyper),
         parseInt(this.inputMaster),
+        parseInt(this.inputFinalMax),
         parseInt(this.inputLast)
       ];
 
@@ -249,6 +272,19 @@ export default {
       !this.$v.inputMaster.maxValue &&
         errors.push("さすがにそれはないっしょwww");
       !this.$v.inputMaster.required && errors.push("必須項目です");
+      return errors;
+    },
+    inputFinalMaxError() {
+      const errors = [];
+      if (this.$v.inputFinalMax.$dirty) return errors;
+      !this.$v.inputFinalMax.int && errors.push("数字を入力してください");
+      !this.$v.inputFinalMax.minLength &&
+        errors.push("4桁の数字を入力してください");
+      !this.$v.inputFinalMax.maxLength &&
+        errors.push("4桁の数字を入力してください");
+      !this.$v.inputFinalMax.maxValue &&
+        errors.push("さすがにそれはないっしょwww");
+      !this.$v.inputFinalMax.required && errors.push("必須項目です");
       return errors;
     },
     inputLastError() {
