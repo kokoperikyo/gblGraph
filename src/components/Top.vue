@@ -31,7 +31,21 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col style="font-size:12px;" class="mt-3" cols="3">スーパー</v-col>
+          <v-col style="font-size:8px;" class="mt-3" cols="3">SL最高</v-col>
+          <v-col color="#f1521a" cols="8">
+            <v-text-field
+              background-color="#B4E1FF"
+              :error-messages="inputSuperMaxError"
+              v-model="inputSuperMax"
+              rounded
+              placeholder="スーパーリーグ最高"
+              solo
+              dense
+            ></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col style="font-size:8px;" class="mt-3" cols="3">SL終了</v-col>
           <v-col color="#f1521a" cols="8">
             <v-text-field
               background-color="#B4E1FF"
@@ -45,7 +59,21 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col style="font-size:12px;" class="mt-3" cols="3">ハイパー</v-col>
+          <v-col style="font-size:8px;" class="mt-3" cols="3">HL最高</v-col>
+          <v-col color="#f1521a" cols="8">
+            <v-text-field
+              background-color="#B4E1FF"
+              :error-messages="inputHyperMaxError"
+              v-model="inputHyperMax"
+              rounded
+              placeholder="ハイパーリーグ最高"
+              solo
+              dense
+            ></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col style="font-size:8px;" class="mt-3" cols="3">HL終了</v-col>
           <v-col color="#f1521a" cols="8">
             <v-text-field
               background-color="#B4E1FF"
@@ -59,7 +87,21 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col style="font-size:12px;" class="mt-3" cols="3">マスター</v-col>
+          <v-col style="font-size:8px;" class="mt-3" cols="3">ML最高</v-col>
+          <v-col color="#f1521a" cols="8">
+            <v-text-field
+              background-color="#B4E1FF"
+              :error-messages="inputMasterMaxError"
+              v-model="inputMasterMax"
+              rounded
+              placeholder="マスターリーグ最高"
+              solo
+              dense
+            ></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col style="font-size:8px;" class="mt-3" cols="3">ML終了</v-col>
           <v-col color="#f1521a" cols="8">
             <v-text-field
               background-color="#B4E1FF"
@@ -119,7 +161,7 @@
     <v-icon>mdi-arrow-down-thick</v-icon>
     <v-icon>mdi-arrow-down-thick</v-icon>
     <v-icon>mdi-arrow-down-thick</v-icon>
-    <v-card class="mx-auto text-center mt-10" color="#f1521a" dark width="400px" height="370px">
+    <v-card class="mx-auto text-center mt-10" color="#f1521a" dark width="400px" height="388px">
       <v-card-text>
         <v-sheet color="#B4E1FF" flat>
           <v-sparkline
@@ -132,14 +174,14 @@
           ></v-sparkline>
         </v-sheet>
       </v-card-text>
-      <v-row class="mx-3">
+      <v-row class="mx-3" no-gutters>
         <v-col v-for="item in value" :key="item.index">
-          <div style="font-size:10px;">{{item}}</div>
+          <div style="font-size:12px;">{{item}}</div>
         </v-col>
       </v-row>
       <v-row class="mx-3">
         <v-col v-for="item in labels" :key="item.index">
-          <div style="font-size:10px;">{{item}}</div>
+          <div style="font-size:12px;">{{item}}</div>
         </v-col>
       </v-row>
     </v-card>
@@ -173,6 +215,13 @@ export default {
       maxValue: maxValue(3299),
       int: integer
     },
+    inputSuperMax: {
+      required,
+      minLength: minLength(4),
+      maxLength: maxLength(4),
+      maxValue: maxValue(3299),
+      int: integer
+    },
     inputSuper: {
       required,
       minLength: minLength(4),
@@ -180,7 +229,21 @@ export default {
       maxValue: maxValue(3299),
       int: integer
     },
+    inputHyperMax: {
+      required,
+      minLength: minLength(4),
+      maxLength: maxLength(4),
+      maxValue: maxValue(3299),
+      int: integer
+    },
     inputHyper: {
+      required,
+      minLength: minLength(4),
+      maxLength: maxLength(4),
+      maxValue: maxValue(3299),
+      int: integer
+    },
+    inputMasterMax: {
       required,
       minLength: minLength(4),
       maxLength: maxLength(4),
@@ -211,13 +274,27 @@ export default {
   },
   data: () => ({
     makeGraphDialog: false,
-    labels: ["初期", "SL", "HL", "ML", "フリー最高", "最終"],
-    value: [2234, 2850, 2550, 2566, 3063, 2924],
+    labels: [
+      "初期",
+      "SL最高",
+      "SL終了",
+      "HL最高",
+      "HL終了",
+      "ML最高",
+      "ML終了",
+      "フリl最高",
+      "最終"
+    ],
+    value: [2234, 2890, 2850, 2570, 2550, 2632, 2566, 3063, 2924],
     inputNickname: "",
     inputFirst: "",
     inputSuper: "",
     inputHyper: "",
     inputMaster: "",
+    inputFirstMax: "",
+    inputSuperMax: "",
+    inputHyperMax: "",
+    inputMasterMax: "",
     inputFinalMax: "",
     inputLast: ""
   }),
@@ -237,8 +314,11 @@ export default {
     makeGraph() {
       const array = [
         parseInt(this.inputFirst),
+        parseInt(this.inputSuperMax),
         parseInt(this.inputSuper),
+        parseInt(this.inputHyperMax),
         parseInt(this.inputHyper),
+        parseInt(this.inputMasterMax),
         parseInt(this.inputMaster),
         parseInt(this.inputFinalMax),
         parseInt(this.inputLast)
@@ -276,6 +356,19 @@ export default {
       !this.$v.inputFirst.required && errors.push("必須項目です");
       return errors;
     },
+    inputSuperMaxError() {
+      const errors = [];
+      if (this.$v.inputSuperMax.$dirty) return errors;
+      !this.$v.inputSuperMax.int && errors.push("数字を入力してください");
+      !this.$v.inputSuperMax.minLength &&
+        errors.push("4桁の数字を入力してください");
+      !this.$v.inputSuperMax.maxLength &&
+        errors.push("4桁の数字を入力してください");
+      !this.$v.inputSuperMax.maxValue &&
+        errors.push("さすがにそれはないっしょwww");
+      !this.$v.inputSuperMax.required && errors.push("必須項目です");
+      return errors;
+    },
     inputSuperError() {
       const errors = [];
       if (this.$v.inputSuper.$dirty) return errors;
@@ -289,6 +382,19 @@ export default {
       !this.$v.inputSuper.required && errors.push("必須項目です");
       return errors;
     },
+    inputHyperMaxError() {
+      const errors = [];
+      if (this.$v.inputHyperMax.$dirty) return errors;
+      !this.$v.inputHyperMax.int && errors.push("数字を入力してください");
+      !this.$v.inputHyperMax.minLength &&
+        errors.push("4桁の数字を入力してください");
+      !this.$v.inputHyperMax.maxLength &&
+        errors.push("4桁の数字を入力してください");
+      !this.$v.inputHyperMax.maxValue &&
+        errors.push("さすがにそれはないっしょwww");
+      !this.$v.inputHyperMax.required && errors.push("必須項目です");
+      return errors;
+    },
     inputHyperError() {
       const errors = [];
       if (this.$v.inputHyper.$dirty) return errors;
@@ -300,6 +406,19 @@ export default {
       !this.$v.inputHyper.maxValue &&
         errors.push("さすがにそれはないっしょwww");
       !this.$v.inputHyper.required && errors.push("必須項目です");
+      return errors;
+    },
+    inputMasterMaxError() {
+      const errors = [];
+      if (this.$v.inputMasterMax.$dirty) return errors;
+      !this.$v.inputMasterMax.int && errors.push("数字を入力してください");
+      !this.$v.inputMasterMax.minLength &&
+        errors.push("4桁の数字を入力してください");
+      !this.$v.inputMasterMax.maxLength &&
+        errors.push("4桁の数字を入力してください");
+      !this.$v.inputMasterMax.maxValue &&
+        errors.push("さすがにそれはないっしょwww");
+      !this.$v.inputMasterMax.required && errors.push("必須項目です");
       return errors;
     },
     inputMasterError() {
@@ -347,6 +466,9 @@ export default {
         this.inputSuperError.length == 0 &&
         this.inputHyperError.length == 0 &&
         this.inputMasterError.length == 0 &&
+        this.inputSuperMaxError.length == 0 &&
+        this.inputHyperMaxError.length == 0 &&
+        this.inputMasterMaxError.length == 0 &&
         this.inputLastError.length == 0
       ) {
         return false;

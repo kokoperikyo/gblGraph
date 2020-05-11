@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mt-2">{{graphInfo.name}}さんのレート推移</div>
-    <v-card class="mx-auto text-center mt-1" color="#f1521a" dark width="400px" height="350px">
+    <v-card class="mx-auto text-center mt-1" color="#f1521a" dark width="400px" height="370px">
       <v-card-text>
         <v-sheet color="#B4E1FF" flat>
           <v-sparkline
@@ -14,14 +14,14 @@
           ></v-sparkline>
         </v-sheet>
       </v-card-text>
-      <v-row class="mx-3">
+      <v-row class="mx-3" no-gutters>
         <v-col v-for="item in graphInfo.rateList" :key="item.index">
-          <div class="font-weight-black" style="font-size:10px;">{{item}}</div>
+          <div class="font-weight-black" style="font-size:8px;">{{item}}</div>
         </v-col>
       </v-row>
       <v-row class="mx-3">
         <v-col v-for="item in labels" :key="item.index">
-          <div class="font-weight-black" style="font-size:10px;">{{item}}</div>
+          <div class="font-weight-black" style="font-size:12px;">{{item}}</div>
         </v-col>
       </v-row>
       <v-img class="rankIcon" :src="whichRank" width="80px"></v-img>
@@ -45,9 +45,9 @@
           </v-btn>
         </v-col>
       </v-row>
-      <v-btn class="mt-5" rounded outlined color="#f1521a" dark @click="toTop">グラフ再作成</v-btn>
+      <v-btn class="mt-5 mb-2" rounded outlined color="#f1521a" dark @click="toTop">グラフ再作成</v-btn>
     </div>
-    <div v-else class="mt-10">
+    <div v-else class="mt-10 mb-2">
       <div class="mb-3">自分も作ってみる</div>
       <v-icon>mdi-arrow-down-thick</v-icon>
       <v-icon>mdi-arrow-down-thick</v-icon>
@@ -64,7 +64,17 @@ import { db } from "@/plugins/firebase";
 
 export default {
   data: () => ({
-    labels: ["初期", "SL", "HL", "ML", "フリー最高", "最終"],
+    labels: [
+      "初期",
+      "SL最高",
+      "SL終了",
+      "HL最高",
+      "HL終了",
+      "ML最高",
+      "ML終了",
+      "フリ l 最高",
+      "最終"
+    ],
     graphInfo: null,
     titleListDis: []
   }),
@@ -117,22 +127,22 @@ export default {
 
       const titleList = [];
       const rateListArray = this.graphInfo.rateList;
-      const copyRateListArrayForThree = [].concat(this.graphInfo.rateList); //配列コピー
-      const copyRateListArrayForFour = [].concat(this.graphInfo.rateList); //配列コピー
-      const copyRateListArrayForFive = [].concat(this.graphInfo.rateList); //配列コピー
-      copyRateListArrayForThree.shift();
-      copyRateListArrayForFour.shift();
-      copyRateListArrayForFive.shift();
-      copyRateListArrayForThree.pop();
-      copyRateListArrayForThree.pop();
-      copyRateListArrayForFour.pop();
-      const favorite = copyRateListArrayForThree.indexOf(
-        Math.max(...copyRateListArrayForThree)
+      const copyRateListArrayForSix = [].concat(this.graphInfo.rateList); //配列コピー
+      const copyRateListArrayForSeven = [].concat(this.graphInfo.rateList); //配列コピー
+      const copyRateListArrayForEight = [].concat(this.graphInfo.rateList); //配列コピー
+      copyRateListArrayForSix.shift();
+      copyRateListArrayForSeven.shift();
+      copyRateListArrayForEight.shift();
+      copyRateListArrayForSix.pop();
+      copyRateListArrayForSix.pop();
+      copyRateListArrayForSeven.pop();
+      const favorite = copyRateListArrayForSix.indexOf(
+        Math.max(...copyRateListArrayForSix)
       );
       const favoriteAll = rateListArray.indexOf(Math.max(...rateListArray));
       console.log(favoriteAll);
 
-      const maxRate = Math.max.apply(null, copyRateListArrayForThree);
+      const maxRate = Math.max.apply(null, copyRateListArrayForSix);
       //リーグ適正
       if (favorite == 0) {
         if (maxRate >= 3000) {
@@ -140,13 +150,13 @@ export default {
         } else {
           titleList.push("スーパーリーグ◯");
         }
-      } else if (favorite == 1) {
+      } else if (favorite == 2) {
         if (maxRate >= 3000) {
           titleList.push("ハイパーリーグ◎");
         } else {
           titleList.push("ハイパーリーグ◯");
         }
-      } else {
+      } else if (favorite == 4) {
         if (maxRate >= 3000) {
           titleList.push("マスターリーグ◎");
         } else {
@@ -168,16 +178,16 @@ export default {
         titleList.push("ランク8");
       }
       //初期レートが低くて3000越えの人
-      if (rateListArray[0] <= 2000 && rateListArray[5] >= 3000) {
+      if (rateListArray[0] <= 2000 && rateListArray[8] >= 3000) {
         titleList.push("マジもんのヤベーやつ");
-      } else if (rateListArray[0] <= 2200 && rateListArray[5] >= 3000) {
+      } else if (rateListArray[0] <= 2200 && rateListArray[8] >= 3000) {
         titleList.push("塵も積もれば");
       }
       //最強決定
-      const fil = copyRateListArrayForFour.filter(num => num >= 3000);
-      if (rateListArray[5] >= 3000 && fil.length >= 3) {
+      const fil = copyRateListArrayForSeven.filter(num => num >= 3000);
+      if (rateListArray[8] >= 3000 && fil.length >= 3) {
         titleList.push("††最強††");
-      } else if (rateListArray[5] >= 3000 && fil.length >= 2) {
+      } else if (rateListArray[8] >= 3000 && fil.length >= 2) {
         titleList.push("強者");
       }
       //3000以上世界ランカー
@@ -187,32 +197,32 @@ export default {
         titleList.push("世界ランカー");
       }
       //下げ幅
-      if (rateListArray[1] - rateListArray[2] >= 300) {
+      if (rateListArray[1] - rateListArray[4] >= 300) {
         titleList.push("滅びろハイパーリーグ");
-      } else if (rateListArray[1] - rateListArray[2] >= 200) {
+      } else if (rateListArray[1] - rateListArray[4] >= 200) {
         titleList.push("ハイパーリーグ？知らない娘だね");
       }
-      if (rateListArray[2] - rateListArray[3] >= 300) {
+      if (rateListArray[3] - rateListArray[6] >= 300) {
         titleList.push("滅びろマスターリーグ");
-      } else if (rateListArray[2] - rateListArray[3] >= 200) {
+      } else if (rateListArray[3] - rateListArray[6] >= 200) {
         titleList.push("マスターリーグ？なにそれ美味しいの？");
       }
       // 山あり谷あり
       if (
-        Math.max.apply(null, rateListArray) -
-          Math.min.apply(null, copyRateListArrayForFive) >=
+        Math.max.apply(null, copyRateListArrayForSix) -
+          Math.min.apply(null, copyRateListArrayForEight) >=
         500
       ) {
         titleList.push("山あり谷あり");
       } else if (
-        Math.max.apply(null, rateListArray) -
-          Math.min.apply(null, copyRateListArrayForFive) >=
+        Math.max.apply(null, copyRateListArrayForSix) -
+          Math.min.apply(null, copyRateListArrayForEight) >=
         300
       ) {
         titleList.push("悔しさこそが成長のバネ");
       }
       //大器晩成
-      if (maxRate < 3000 && rateListArray[4] >= 3000) {
+      if (maxRate < 3000 && rateListArray[7] >= 3000) {
         titleList.push("大器晩成");
       }
       //右肩上がり
@@ -221,14 +231,17 @@ export default {
         rateListArray[1] <= rateListArray[2] &&
         rateListArray[2] <= rateListArray[3] &&
         rateListArray[3] <= rateListArray[4] &&
-        rateListArray[4] <= rateListArray[5]
+        rateListArray[4] <= rateListArray[5] &&
+        rateListArray[5] <= rateListArray[6] &&
+        rateListArray[6] <= rateListArray[7] &&
+        rateListArray[7] <= rateListArray[8]
       ) {
-        titleList.push("努力の賜物");
+        titleList.push("右肩上がり");
       } else if (
         rateListArray[0] <= rateListArray[1] &&
-        rateListArray[1] <= rateListArray[2] &&
-        rateListArray[2] <= rateListArray[3] &&
-        rateListArray[3] <= rateListArray[4]
+        rateListArray[1] <= rateListArray[3] &&
+        rateListArray[3] <= rateListArray[5] &&
+        rateListArray[5] <= rateListArray[7]
       ) {
         titleList.push("順調な人生");
       }
