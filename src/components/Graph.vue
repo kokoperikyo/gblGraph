@@ -264,7 +264,7 @@ export default {
 <style>
 .rankIcon {
   position: absolute;
-  bottom: 260px;
+  bottom: 290px;
   left: 20px;
 }
 .title {
