@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card class="mx-auto text-center mt-1" color="#B4E1FF" width="400px">
-      <div style="color:black;" class="pt-10">シーズン１お疲れ様でした</div>
+      <div style="color:black;" class="pt-10">シーズン2お疲れ様でした</div>
       <div style="color:black;">レートの推移をグラフで振り返ってみませんか？</div>
       <v-row>
         <v-col style="font-size:12px;" class="mt-4" color="#f1521a" cols="3">ニックネーム</v-col>
@@ -264,7 +264,7 @@ export default {
         parseInt(this.inputLast)
       ];
 
-      db.collection("graphInfo")
+      db.collection("graphInfoSeason2")
         .doc(localStorage.getItem("key"))
         .set({
           rateList: array,

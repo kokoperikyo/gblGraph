@@ -154,7 +154,7 @@
         >グラフ作成</v-btn>
       </v-card>
     </v-dialog>
-    <div style="color:black;" class="pt-10">シーズン１お疲れ様でした</div>
+    <div style="color:black;" class="pt-10">シーズン2お疲れ様でした</div>
     <div style="color:black;">レートの推移をグラフで振り返ってみませんか？</div>
     <v-btn class="mt-5" color="#f1521a" dark rounded @click="makeGraphDialog = true">グラフを作る</v-btn>
     <div class="mt-10">サンプル</div>
@@ -212,63 +212,63 @@ export default {
       required,
       minLength: minLength(4),
       maxLength: maxLength(4),
-      maxValue: maxValue(3299),
+      maxValue: maxValue(3499),
       int: integer
     },
     inputSuperMax: {
       required,
       minLength: minLength(4),
       maxLength: maxLength(4),
-      maxValue: maxValue(3299),
+      maxValue: maxValue(3499),
       int: integer
     },
     inputSuper: {
       required,
       minLength: minLength(4),
       maxLength: maxLength(4),
-      maxValue: maxValue(3299),
+      maxValue: maxValue(3499),
       int: integer
     },
     inputHyperMax: {
       required,
       minLength: minLength(4),
       maxLength: maxLength(4),
-      maxValue: maxValue(3299),
+      maxValue: maxValue(3499),
       int: integer
     },
     inputHyper: {
       required,
       minLength: minLength(4),
       maxLength: maxLength(4),
-      maxValue: maxValue(3299),
+      maxValue: maxValue(3499),
       int: integer
     },
     inputMasterMax: {
       required,
       minLength: minLength(4),
       maxLength: maxLength(4),
-      maxValue: maxValue(3299),
+      maxValue: maxValue(3499),
       int: integer
     },
     inputMaster: {
       required,
       minLength: minLength(4),
       maxLength: maxLength(4),
-      maxValue: maxValue(3299),
+      maxValue: maxValue(3499),
       int: integer
     },
     inputFinalMax: {
       required,
       minLength: minLength(4),
       maxLength: maxLength(4),
-      maxValue: maxValue(3299),
+      maxValue: maxValue(3499),
       int: integer
     },
     inputLast: {
       required,
       minLength: minLength(4),
       maxLength: maxLength(4),
-      maxValue: maxValue(3299),
+      maxValue: maxValue(3499),
       int: integer
     }
   },
@@ -282,10 +282,10 @@ export default {
       "HL終了",
       "ML最高",
       "ML終了",
-      "フリl最高",
+      "フリ | 最高",
       "最終"
     ],
-    value: [2234, 2890, 2850, 2570, 2550, 2632, 2566, 3063, 2924],
+    value: [2246, 2510, 2480, 2804, 2790, 2804, 2660, 3020, 3020],
     inputNickname: "",
     inputFirst: "",
     inputSuper: "",
@@ -324,7 +324,7 @@ export default {
         parseInt(this.inputLast)
       ];
 
-      db.collection("graphInfo")
+      db.collection("graphInfoSeason2")
         .doc(localStorage.getItem("key"))
         .set({
           rateList: array,

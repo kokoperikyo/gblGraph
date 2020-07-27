@@ -72,7 +72,7 @@ export default {
       "HL終了",
       "ML最高",
       "ML終了",
-      "フリ l 最高",
+      "フリ | 最高",
       "最終"
     ],
     graphInfo: null,
@@ -88,12 +88,12 @@ export default {
     TwitterShare() {
       var shareURL =
         "https://twitter.com/intent/tweet?text=" +
-        "シーズン１振り返りグラフ" +
+        "シーズン2振り返りグラフ" +
         "%20%23ポケモンGO" +
         "%20%23GOバトルリーグ" +
         "%20%23GBLグラフ" +
         "&url=" +
-        // `http://192.168.3.68:8081/graph/${this.$route.params["uid"]}`;
+        // `http://192.168.3.68:8080/graph/${this.$route.params["uid"]}`;
         `https://gblgraph.firebaseapp.com/graph/${this.$route.params["uid"]}`;
       location.href = shareURL;
     }
@@ -136,39 +136,39 @@ export default {
       copyRateListArrayForSix.pop();
       copyRateListArrayForSix.pop();
       copyRateListArrayForSeven.pop();
-      const favorite = copyRateListArrayForSix.indexOf(
-        Math.max(...copyRateListArrayForSix)
-      );
+      // const favorite = copyRateListArrayForSix.indexOf(
+      //   Math.max(...copyRateListArrayForSix)
+      // );
       const favoriteAll = rateListArray.indexOf(Math.max(...rateListArray));
-      console.log(favoriteAll);
+      // console.log(favoriteAll);
 
       const maxRate = Math.max.apply(null, copyRateListArrayForSix);
       //リーグ適正
-      if (favorite == 0) {
-        if (maxRate >= 3000) {
-          titleList.push("スーパーリーグ◎");
-        } else {
-          titleList.push("スーパーリーグ◯");
-        }
-      } else if (favorite == 2) {
-        if (maxRate >= 3000) {
-          titleList.push("ハイパーリーグ◎");
-        } else {
-          titleList.push("ハイパーリーグ◯");
-        }
-      } else if (favorite == 4) {
-        if (maxRate >= 3000) {
-          titleList.push("マスターリーグ◎");
-        } else {
-          titleList.push("マスターリーグ◯");
-        }
-      }
+      // if (favorite == 0) {
+      //   if (maxRate >= 3000) {
+      //     titleList.push("スーパーリーグ◎");
+      //   } else {
+      //     titleList.push("スーパーリーグ◯");
+      //   }
+      // } else if (favorite == 2) {
+      //   if (maxRate >= 3000) {
+      //     titleList.push("ハイパーリーグ◎");
+      //   } else {
+      //     titleList.push("ハイパーリーグ◯");
+      //   }
+      // } else if (favorite == 4) {
+      //   if (maxRate >= 3000) {
+      //     titleList.push("マスターリーグ◎");
+      //   } else {
+      //     titleList.push("マスターリーグ◯");
+      //   }
+      // }
       //初期レートが高い人
-      if (rateListArray[0] >= 2700) {
-        titleList.push("スタートダッシュ◎");
-      } else if (rateListArray[0] >= 2500) {
-        titleList.push("スタートダッシュ◯");
-      }
+      // if (rateListArray[0] >= 2700) {
+      //   titleList.push("スタートダッシュ◎");
+      // } else if (rateListArray[0] >= 2500) {
+      //   titleList.push("スタートダッシュ◯");
+      // }
       //ランク
       if (Math.max.apply(null, rateListArray) >= 3000) {
         titleList.push("ランク10");
@@ -178,33 +178,35 @@ export default {
         titleList.push("ランク8");
       }
       //初期レートが低くて3000越えの人
-      if (rateListArray[0] <= 2000 && rateListArray[8] >= 3000) {
-        titleList.push("マジもんのヤベーやつ");
-      } else if (rateListArray[0] <= 2200 && rateListArray[8] >= 3000) {
+      if (rateListArray[0] <= 1800 && rateListArray[8] >= 3000) {
+        titleList.push("圧倒的成長");
+      } else if (rateListArray[0] <= 2000 && rateListArray[8] >= 3000) {
         titleList.push("塵も積もれば");
       }
-      //最強決定
+      //最強決定（ずっと3000超え）
       const fil = copyRateListArrayForSeven.filter(num => num >= 3000);
-      if (rateListArray[8] >= 3000 && fil.length >= 3) {
+      if (rateListArray[8] >= 3000 && fil.length >= 5) {
         titleList.push("††最強††");
-      } else if (rateListArray[8] >= 3000 && fil.length >= 2) {
+      } else if (rateListArray[8] >= 3000 && fil.length >= 4) {
         titleList.push("強者");
       }
       //3000以上世界ランカー
-      if (Math.max.apply(null, rateListArray) >= 3100) {
+      if (Math.max.apply(null, rateListArray) >= 3400) {
+        titleList.push("人間やめてる");
+      } else if (Math.max.apply(null, rateListArray) >= 3300) {
         titleList.push("世界トップランカー");
-      } else if (Math.max.apply(null, rateListArray) >= 3000) {
+      } else if (Math.max.apply(null, rateListArray) >= 3200) {
         titleList.push("世界ランカー");
       }
       //下げ幅
-      if (rateListArray[1] - rateListArray[4] >= 300) {
+      if (rateListArray[2] - rateListArray[3] >= 200) {
         titleList.push("滅びろハイパーリーグ");
-      } else if (rateListArray[1] - rateListArray[4] >= 200) {
+      } else if (rateListArray[2] - rateListArray[3] >= 150) {
         titleList.push("ハイパーリーグ？知らない娘だね");
       }
-      if (rateListArray[3] - rateListArray[6] >= 300) {
+      if (rateListArray[4] - rateListArray[5] >= 300) {
         titleList.push("滅びろマスターリーグ");
-      } else if (rateListArray[3] - rateListArray[6] >= 200) {
+      } else if (rateListArray[4] - rateListArray[5] >= 200) {
         titleList.push("マスターリーグ？なにそれ美味しいの？");
       }
       // 山あり谷あり
@@ -221,7 +223,7 @@ export default {
       ) {
         titleList.push("悔しさこそが成長のバネ");
       }
-      //大器晩成
+      //大器晩成（フリー無しでは3000行けなかったけど最後行った人）
       if (maxRate < 3000 && rateListArray[7] >= 3000) {
         titleList.push("大器晩成");
       }
@@ -251,12 +253,52 @@ export default {
       } else if (favoriteAll == 0) {
         titleList.push("上を向いて歩こう");
       }
+      //スーパーでランク９行った人
+      if (rateListArray[1] >= 2500) {
+        titleList.push("スーパーリーグの鬼");
+      }
+      //ハイパーでランク10行った人
+      if (rateListArray[3] >= 3000) {
+        titleList.push("ハイパーリーグの鬼");
+      }
+      //スーパーの世界ランカー
+      if (rateListArray[1] >= 2500) {
+        titleList.push("スーパー世界ランカー");
+      }
+      //ハイパーの世界ランカー
+      if (rateListArray[3] >= 2800) {
+        titleList.push("ハイパー世界ランカー");
+      }
+      //スーパー９ハイパー１０マスター3100超え
+      if (
+        rateListArray[1] >= 2500 &&
+        rateListArray[3] >= 3000 &&
+        rateListArray[5] >= 3100
+      ) {
+        titleList.push("全階級制覇");
+      }
+      //ランク１０には行けなかったがチャレンジはした人
+      if (
+        Math.max.apply(null, rateListArray) < 3000 &&
+        Math.max.apply(null, rateListArray) >= 2950
+      ) {
+        titleList.push("決死のランク10チャレンジャー");
+      }
+      //ランク１０には行けなかったが2700以上の人
+      if (
+        Math.max.apply(null, rateListArray) < 3000 &&
+        Math.max.apply(null, rateListArray) >= 2700
+      ) {
+        titleList.push("大丈夫!君は実力者。");
+      }
       this.titleListDis = titleList;
     }, 3000);
   },
   firestore() {
     return {
-      graphInfo: db.collection("graphInfo").doc(this.$route.params["uid"])
+      graphInfo: db
+        .collection("graphInfoSeason2")
+        .doc(this.$route.params["uid"])
     };
   }
 };
